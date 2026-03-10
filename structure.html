@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCore — Digitised Medical Record System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+</head>
+<body>
+
+<!-- ══════════════ LANDING ══════════════ -->
+<div id="s-land" class="screen on">
+  <div class="land-inner">
+    <span class="land-icon">🏥</span>
+    <h1 class="land-title">Medi<span>Core</span></h1>
+    <p class="land-sub">Digitised Medical Record System<br>One clinic. Every patient. Every visit. Always there.</p>
+    <div class="role-grid">
+      <div class="role-card" onclick="goLogin('admin')">
+        <span class="rc-icon">🏢</span>
+        <div class="rc-name">Admin</div>
+        <div class="rc-desc">Register patients, manage records & run the clinic</div>
+      </div>
+      <div class="role-card" onclick="goLogin('doctor')">
+        <span class="rc-icon">👨‍⚕️</span>
+        <div class="rc-name">Doctor</div>
+        <div class="rc-desc">Look up patient history and add visit notes</div>
+      </div>
+      <div class="role-card" onclick="goLogin('patient')">
+        <span class="rc-icon">🪪</span>
+        <div class="rc-name">Patient</div>
+        <div class="rc-desc">View your complete records with your Patient ID</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="s-login" class="screen">
+  <div class="login-box">
+    <button class="login-back" onclick="goScreen('s-land')">← Back</button>
+    <div class="login-tag" id="login-tag">🏢 Admin</div>
+    <h1 class="login-title">Welcome back</h1>
+    <p class="login-sub">Sign in to access MediCore</p>
+    <div id="login-err" class="alert a-err" style="display:none;"></div>
+
+    <!-- Staff login -->
+    <div id="login-staff">
+      <div class="fg"><label>Username</label><input type="text" id="inp-user" placeholder="Enter username"></div>
+      <div class="fg"><label>Password</label><input type="password" id="inp-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn btn-p btn-full" onclick="doLogin()">Sign In →</button>
+      <div class="demo-hint" id="demo-hint"></div>
+    </div>
+
+    <!-- Patient ID login -->
+    <div id="login-patient" style="display:none;">
+      <div class="fg">
+        <label>Your Patient ID</label>
+        <input type="text" id="inp-pid" placeholder="e.g. MC-2024-001" style="text-transform:uppercase;letter-spacing:2px;font-size:17px;font-weight:700;" onkeydown="if(event.key==='Enter')doPatientLogin()">
+      </div>
+      <button class="btn btn-p btn-full" onclick="doPatientLogin()">Access My Records →</button>
+      <div class="demo-hint">🪪 <strong>Demo IDs:</strong> MC-2024-001 &nbsp;·&nbsp; MC-2024-002 &nbsp;·&nbsp; MC-2024-003</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="s-app" class="screen">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <span class="sb-logo-icon">🏥</span>
+      <span class="sb-logo-text">MediCore</span>
+    </div>
+    <div class="sb-badge" id="sb-badge"></div>
+    <div class="sb-sec">Menu</div>
+    <nav class="sb-nav" id="sb-nav"></nav>
+    <div class="sb-foot">
+      <div class="sb-user">
+        <div class="sb-avatar" id="sb-avatar"></div>
+        <div>
+          <div class="sb-uname" id="sb-uname"></div>
+          <div class="sb-urole" id="sb-urole"></div>
+        </div>
+      </div>
+      <button class="sb-logout" onclick="doLogout()">⏻ &nbsp;Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title"></div>
+      <div class="topbar-date" id="topbar-date"></div>
+    </div>
+    <div class="page-body" id="page-body"></div>
+  </div>
+</div>
+
+<!-- ADD RECORD MODAL -->
+<div class="modal-bg" id="modal-record">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">📋 Add Visit Record</div>
+      <button class="btn-x" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-patient-info" style="font-size:14px;color:var(--muted);margin-bottom:16px;"></div>
+    <div id="modal-err" class="alert a-err" style="display:none;"></div>
+    <div class="fg"><label>Visit Date *</label><input type="date" id="rec-date"></div>
+    <div class="fg"><label>Diagnosis *</label><input type="text" id="rec-diag" placeholder="e.g. Hypertension, Flu"></div>
+    <div class="fg"><label>Notes / Symptoms</label><textarea id="rec-notes" placeholder="Symptoms, observations, advice given..."></textarea></div>
+    <div class="fg"><label>Prescriptions <small style="color:#94a3b8">(comma separated)</small></label><input type="text" id="rec-meds" placeholder="Paracetamol 500mg, Ibuprofen 400mg"></div>
+    <div class="fg"><label>Doctor Name *</label><input type="text" id="rec-doc" placeholder="Dr. ___"></div>
+    <button class="btn btn-p btn-full" onclick="saveRecord()">💾 Save Record</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body></html>
